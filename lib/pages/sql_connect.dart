@@ -82,7 +82,7 @@ class _SqlConncetState extends State<SqlConncet> {
                 height: height * 0.7,
                 padding: EdgeInsets.all(30),
                 width: width * 0.5,
-                color: Colors.redAccent,
+                color: Colors.transparent,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -144,7 +144,7 @@ class _SqlConncetState extends State<SqlConncet> {
               ),
               Container(
                 width: width * 0.5,
-                color: Colors.purpleAccent,
+                color: Colors.transparent,
                 child: Visibility(
                   visible: ans.isNotEmpty,
                   child: Column(
