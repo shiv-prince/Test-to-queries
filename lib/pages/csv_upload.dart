@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html' as html;
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:final_sheshu/tableview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,7 +16,7 @@ class CsvUploader extends StatefulWidget {
 
 TextEditingController _responseController = TextEditingController();
 String res = "";
-Map<String, dynamic> ans = {};
+Map<String, dynamic>? ans;
 List<String> names = [];
 
 class _CsvUploaderState extends State<CsvUploader> {
@@ -65,7 +65,8 @@ class _CsvUploaderState extends State<CsvUploader> {
       // Check if the request was successful (status code 200)
       if (response.statusCode == 200) {
         // Parse the response JSON
-        final responseData = jsonDecode(response.body);
+
+        Map<String, dynamic> responseData = jsonDecode(response.body);
         setState(() {
           ans = responseData;
           _isLoading = false;
@@ -110,11 +111,11 @@ class _CsvUploaderState extends State<CsvUploader> {
       });
       print('Error calling the question_csv endpoint: $e');
     }
-    String firstNameKey = ans.keys.first;
+    String firstNameKey = ans!.keys.first;
     print(ans);
     print(firstNameKey);
     setState(() {
-      names = (ans[firstNameKey] as Map<String, dynamic>)
+      names = (ans![firstNameKey] as Map<String, dynamic>)
           .values
           .map((value) => value.toString())
           .toList();
@@ -322,28 +323,46 @@ class _CsvUploaderState extends State<CsvUploader> {
           Positioned(
               top: height * 0.35,
               left: width * 0.02,
+              width: width * 0.6,
               child: SizedBox(
-                height: height * 0.6,
+                height: height * 0.45,
+                width: width * 0.6,
+                child: Visibility(
+                  visible: !_isLoading,
+                  child: ans == null
+                      ? const Text("")
+                      : DynamicTableWidget(data: ans!),
+                ),
+              )),
+          Positioned(
+              top: height * 0.35,
+              left: width * 0.7,
+              width: width * 0.3,
+              child: SizedBox(
+                height: height * 0.45,
                 width: width * 0.5,
                 child: Visibility(
                   visible: !_isLoading,
-                  child: ListView.builder(
-                      itemCount: names.length,
-                      itemBuilder: (context, index) {
-                        return AnimatedTextKit(
-                            totalRepeatCount: 1,
-                            animatedTexts: [
-                              TypewriterAnimatedText(
-                                  speed: const Duration(milliseconds: 300),
-                                  names[index]),
-                            ]);
-                      }),
+                  child: ans == null
+                      ? const Text("")
+                      : Container(
+                          padding: const EdgeInsets.all(30),
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                              child: Text(
+                            " Query generated \n\n ${ans!["query"]}",
+                            style: const TextStyle(color: Colors.white),
+                          ))),
                 ),
               )),
           if (_isLoading)
             Positioned(
               top: height * 0.35,
               left: width * 0.02,
+              width: width,
               child: const Center(
                 child: CircularProgressIndicator(
                   color: Colors.black,
