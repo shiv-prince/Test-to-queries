@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html' as html;
-import 'package:animated_text_kit/animated_text_kit.dart';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:final_sheshu/tableview.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rive/rive.dart';
 
 @RoutePage()
 class ExcelUploader extends StatefulWidget {
@@ -16,6 +17,7 @@ class ExcelUploader extends StatefulWidget {
 }
 
 class _ExcelUploaderState extends State<ExcelUploader> {
+  Artboard? riveArtboard;
   html.File? _selectedFile;
   bool _isLoading = false;
   TextEditingController _responseController = TextEditingController();
@@ -360,9 +362,14 @@ class _ExcelUploaderState extends State<ExcelUploader> {
               top: height * 0.35,
               left: width * 0.02,
               child: const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: RiveAnimation.asset("assets/hexasphere_loading.riv"),
                 ),
+                // child: CircularProgressIndicator(
+                //   color: Colors.black,
+                // ),
               ),
             ),
         ],

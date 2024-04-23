@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html' as html;
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:final_sheshu/tableview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:rive/rive.dart';
 
 @RoutePage()
 class CsvUploader extends StatefulWidget {
@@ -268,7 +270,7 @@ class _CsvUploaderState extends State<CsvUploader> {
           ),
           Positioned(
             top: height * 0.14,
-            left: width * 0.2,
+            left: width * 0.5,
             child: res != ""
                 ? Text("Selected File: ${_selectedFile!.name}")
                 : const Text("Select your file"),
@@ -280,7 +282,7 @@ class _CsvUploaderState extends State<CsvUploader> {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: width * 0.65,
+                        width: width * 0.45,
                         child: TextField(
                           controller: _responseController,
                           readOnly: false,
@@ -336,10 +338,10 @@ class _CsvUploaderState extends State<CsvUploader> {
               )),
           Positioned(
               top: height * 0.35,
-              left: width * 0.7,
+              left: width * 0.68,
               width: width * 0.3,
               child: SizedBox(
-                height: height * 0.45,
+                height: height * 0.5,
                 width: width * 0.5,
                 child: Visibility(
                   visible: !_isLoading,
@@ -352,10 +354,45 @@ class _CsvUploaderState extends State<CsvUploader> {
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
-                              child: SelectableText(
-                            " Query generated \n\n ${ans!["query"]}",
-                            style: const TextStyle(color: Colors.white),
-                          ))),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const Text(
+                                  softWrap: true,
+                                  "Query:",
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.black,
+                                      backgroundColor: Colors.white),
+                                  textAlign: TextAlign.left,
+                                ),
+                                DefaultTextStyle(
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  child: AnimatedTextKit(
+                                      repeatForever: false,
+                                      totalRepeatCount: 1,
+                                      animatedTexts: [
+                                        TypewriterAnimatedText('Generating....',
+                                            speed: const Duration(
+                                                microseconds: 500)),
+                                        TypewriterAnimatedText(
+                                            '${ans!["query"]}',
+                                            speed: const Duration(
+                                                microseconds: 400),
+                                            cursor: '_'),
+                                      ]),
+                                ),
+                              ],
+                            ),
+                            // child: SelectableText(
+                            //   " Query generated \n\n ${ans!["query"]}",
+                            //   style: const TextStyle(color: Colors.white),
+                            // ),
+                          ),
+                        ),
                 ),
               )),
           if (_isLoading)
@@ -363,9 +400,11 @@ class _CsvUploaderState extends State<CsvUploader> {
               top: height * 0.35,
               left: width * 0.02,
               width: width,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
+              child: SizedBox(
+                height: height * 0.3,
+                width: width * 0.1,
+                child: const Center(
+                  child: RiveAnimation.asset("assets/hexasphere_loading.riv"),
                 ),
               ),
             ),

@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: [
               Positioned(
-                left: 100,
                 top: height * 0.02,
                 child: const Text(
                   "Text To Queries",
@@ -76,8 +75,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Positioned(
-                  top: height * 0.6,
-                  left: width * 0.48,
+                  top: height * 0.55,
+                  left: width * 0.45,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 10,
@@ -100,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                   top: height * 0.15,
                   left: width * 0.09,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Image.asset(scale: 1.3, "assets/main.png"),
                       SizedBox(
@@ -119,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                 width: width,
                 top: height * 1.1,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
                       children: [
@@ -153,6 +152,9 @@ class _HomePageState extends State<HomePage> {
                         )
                       ],
                     ),
+                    SizedBox(
+                      width: width * 0.12,
+                    ),
                     Column(
                       children: [
                         Image.asset("assets/hero2.png"),
@@ -184,6 +186,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         )
                       ],
+                    ),
+                    SizedBox(
+                      width: width * 0.12,
                     ),
                     Column(
                       children: [
@@ -227,10 +232,6 @@ class _HomePageState extends State<HomePage> {
                   width: width,
                   decoration: const BoxDecoration(
                     color: Colors.black,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
                   ),
                   child: Center(
                     child: SizedBox(
