@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:final_sheshu/pages/sql_queries.dart';
+import 'package:final_sheshu/routes/routes_imports.gr.dart';
 import 'package:http/http.dart' as http;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,13 +21,16 @@ class _SqlConncetState extends State<SqlConncet> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    Map<String, dynamic> ans = {};
+    FutureOr<List<List<String>>> ans;
+    var code;
+    bool _isloading = false;
     TextEditingController _unameController = TextEditingController();
     TextEditingController _upassController = TextEditingController();
     TextEditingController _hostController = TextEditingController();
     TextEditingController _dbnameController = TextEditingController();
 
-    Future<List<List<String>>> _connection() async {
+    Future<void> connection() async {
+      _isloading = true;
       // Define the URL for the FastAPI endpoint
       final url = 'http://127.0.0.1:8000/connection/';
 
@@ -49,17 +55,12 @@ class _SqlConncetState extends State<SqlConncet> {
         // Check if the request was successful (status code 200)
         if (response.statusCode == 200) {
           // Parse the response JSON
+
           final responseData = jsonDecode(response.body);
-          // Return the response data
-          setState(() {
-            ans = responseData
-                .map<List<String>>((item) => List<String>.from(item))
-                .toList();
-          });
-          print(ans);
-          return responseData
-              .map<List<String>>((item) => List<String>.from(item))
-              .toList();
+
+          code = response.statusCode;
+
+          print(responseData);
         } else {
           // If the request was not successful, throw an exception or return null
           throw Exception('Failed to make connection: ${response.statusCode}');
@@ -70,11 +71,13 @@ class _SqlConncetState extends State<SqlConncet> {
         // Re-throw the exception to be caught by the caller
         rethrow;
       }
+      _isloading = false;
     }
 
     return Scaffold(
       appBar: AppBar(title: const Text('SQl Connector')),
       body: Stack(
+        alignment: Alignment.topCenter,
         children: [
           Row(
             children: [
@@ -124,32 +127,22 @@ class _SqlConncetState extends State<SqlConncet> {
                           backgroundColor: Colors.black87,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
-                      onPressed: () {
-                        setState(() {
-                          ans = _connection() as Map<String, dynamic>;
-                        });
-                        _connection();
+                      onPressed: () async {
+                        await connection().then((value) => null);
+
+                        if (code == 200) {
+                          AutoRouter.of(context).push(const SqlQueriesRoute());
+                        }
                       },
-                      child: const Text(
-                        "Connect",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
+                      child: _isloading
+                          ? CircularProgressIndicator()
+                          : Text(
+                              "Connect",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                     ),
                   ],
-                ),
-              ),
-              Divider(
-                thickness: 1,
-                color: Colors.black,
-              ),
-              Container(
-                width: width * 0.5,
-                color: Colors.transparent,
-                child: Visibility(
-                  visible: ans.isNotEmpty,
-                  child: Column(
-                    children: [Text("Connection extablished Successfully")],
-                  ),
                 ),
               ),
             ],

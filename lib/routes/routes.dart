@@ -8,6 +8,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: HomePageRoute.page, path: '/'),
         AutoRoute(page: CsvUploaderRoute.page),
         AutoRoute(page: ExcelUploaderRoute.page),
-        AutoRoute(page: SqlConncetRoute.page)
+        AutoRoute(page: SqlConncetRoute.page),
+        AutoRoute(page: SqlQueriesRoute.page)
       ];
 }
