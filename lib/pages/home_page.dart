@@ -36,10 +36,11 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: [
               Positioned(
-                top: height * 0.02,
+                left: width * 0.42,
+                top: height * 0.09,
                 child: const Text(
                   "Text To Queries",
-                  style: TextStyle(fontSize: 35),
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.w900),
                 ),
               ),
               Positioned(
@@ -88,7 +89,10 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
-                          left: width * 0.1, right: width * 0.1),
+                          left: width * 0.1,
+                          right: width * 0.1,
+                          top: 10,
+                          bottom: 10),
                       child: const Text(
                         "Get Started",
                         style: TextStyle(color: Colors.white, fontSize: 24),
@@ -107,21 +111,26 @@ class _HomePageState extends State<HomePage> {
                         child: const Padding(
                           padding: EdgeInsets.only(left: 10, right: 10),
                           child: Text(
-                              textAlign: TextAlign.center,
-                              "Welcome to our cutting-edge text-to-SQL conversion service, where your unstructured text transforms into structured, actionable SQL queries seamlessly. Empower your business to leverage the full potential of your data without the hassle of manual query writing"),
+                            textAlign: TextAlign.center,
+                            "Welcome to our cutting-edge text-to-SQL conversion service, where your unstructured text transforms into structured, actionable SQL queries seamlessly. Empower your business to leverage the full potential of your data without the hassle of manual query writing",
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                       )
                     ],
                   )),
               Positioned(
                 key: selectionkey1,
-                width: width,
+                width: width * 3,
                 top: height * 1.1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
                       children: [
+                        SizedBox(
+                          width: width * 0.28,
+                        ),
                         Image.asset("assets/hero1.png"),
                         const SizedBox(
                           height: 10,
@@ -233,70 +242,17 @@ class _HomePageState extends State<HomePage> {
                   decoration: const BoxDecoration(
                     color: Colors.black,
                   ),
-                  child: Center(
+                  child: const Center(
                     child: SizedBox(
-                      width: 300,
+                      width: double.infinity,
                       child: Column(
                         children: [
-                          const SizedBox(
+                          SizedBox(
                             height: 30,
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: Image.asset(
-                                    "assets/github.png",
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                ),
-                              ),
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: Image.asset(
-                                    "assets/linkedin.png",
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                ),
-                              ),
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(0.0),
-                                  child: Image.asset(
-                                    "assets/telegram.png",
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                ),
-                              ),
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(0.0),
-                                  child: Image.asset(
-                                    "assets/instagram.png",
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
+                          Text(
                             "Copyright © 2024 - 2025 . All rights reserved - Final year Project ",
-                            style: TextStyle(color: Colors.white, fontSize: 10),
+                            style: TextStyle(color: Colors.white, fontSize: 14),
                           ),
                         ],
                       ),

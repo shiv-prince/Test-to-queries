@@ -240,40 +240,77 @@ class _CsvUploaderState extends State<CsvUploader> {
     //List<String> names = ans["First_Name"].values.toList();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CSV Uploader'),
+        title: const Text(
+          'CSV Uploader',
+          style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),
+        ),
       ),
       body: Stack(
         children: [
           Positioned(
-            top: height * 0.01,
-            left: width * 0.02,
-            child: const Text(
-              "Upload your files",
-              style: TextStyle(fontSize: 45, fontWeight: FontWeight.w300),
-            ),
-          ),
-          Positioned(
-            top: height * 0.13,
-            left: width * 0.02,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  elevation: 10,
-                  backgroundColor: Colors.black87,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-              onPressed: _selectFile,
-              child: const Text(
-                "Upload File",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+            left: width * 0.12,
+            top: height * 0.08,
+            child: Container(
+              height: height * 0.28,
+              width: width * 0.45,
+              margin: EdgeInsets.only(left: 200),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [
+                  Positioned(
+                    top: height * 0.01,
+                    left: width * 0.02,
+                    child: const Text(
+                      "Upload your CSV file",
+                      style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.w300),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Positioned(
+                        top: height * 0.13,
+                        left: width * 0.02,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              elevation: 10,
+                              backgroundColor: Colors.black87,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          onPressed: _selectFile,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: const Text(
+                              "Upload File",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      Positioned(
+                        top: height * 0.14,
+                        left: width * 0.5,
+                        child: res != ""
+                            ? Text("Selected File: ${_selectedFile!.name}")
+                            : const Text("Select your file"),
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
-          ),
-          Positioned(
-            top: height * 0.14,
-            left: width * 0.5,
-            child: res != ""
-                ? Text("Selected File: ${_selectedFile!.name}")
-                : const Text("Select your file"),
           ),
           res != ""
               ? Positioned(

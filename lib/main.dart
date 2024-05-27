@@ -1,4 +1,3 @@
-import 'package:final_sheshu/centered_view.dart';
 import 'package:final_sheshu/routes/routes_imports.dart';
 import 'package:flutter/material.dart';
 

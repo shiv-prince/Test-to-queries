@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:final_sheshu/pages/sql_queries.dart';
 import 'package:final_sheshu/routes/routes_imports.gr.dart';
 import 'package:http/http.dart' as http;
 import 'package:auto_route/auto_route.dart';
@@ -75,77 +74,96 @@ class _SqlConncetState extends State<SqlConncet> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('SQl Connector')),
+      appBar: AppBar(
+          title: const Text(
+        'SQL Connector',
+        style: TextStyle(fontWeight: FontWeight.w900),
+      )),
       body: Stack(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.center,
         children: [
-          Row(
-            children: [
-              Container(
-                height: height * 0.7,
-                padding: EdgeInsets.all(30),
-                width: width * 0.5,
-                color: Colors.transparent,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextField(
-                      controller: _unameController,
-                      readOnly: false,
-                      decoration: const InputDecoration(
-                        labelText: 'user_name',
-                        border: OutlineInputBorder(),
+          Positioned(
+            left: MediaQuery.sizeOf(context).width * 0.25,
+            child: Row(
+              children: [
+                Container(
+                  height: height * 0.7,
+                  padding: EdgeInsets.all(30),
+                  width: width * 0.5,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all()),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "Enter Your DB Details",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 18),
                       ),
-                    ),
-                    TextField(
-                      controller: _upassController,
-                      readOnly: false,
-                      decoration: const InputDecoration(
-                        labelText: 'user_pass',
-                        border: OutlineInputBorder(),
+                      TextField(
+                        controller: _unameController,
+                        readOnly: false,
+                        decoration: const InputDecoration(
+                          labelText: 'user_name',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    TextField(
-                      controller: _hostController,
-                      readOnly: false,
-                      decoration: const InputDecoration(
-                        labelText: 'host_details',
-                        border: OutlineInputBorder(),
+                      TextField(
+                        controller: _upassController,
+                        readOnly: false,
+                        decoration: const InputDecoration(
+                          labelText: 'user_pass',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    TextField(
-                      controller: _dbnameController,
-                      readOnly: false,
-                      decoration: const InputDecoration(
-                        labelText: 'db_name',
-                        border: OutlineInputBorder(),
+                      TextField(
+                        controller: _hostController,
+                        readOnly: false,
+                        decoration: const InputDecoration(
+                          labelText: 'host_details',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          elevation: 10,
-                          backgroundColor: Colors.black87,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      onPressed: () async {
-                        await connection().then((value) => null);
+                      TextField(
+                        controller: _dbnameController,
+                        readOnly: false,
+                        decoration: const InputDecoration(
+                          labelText: 'db_name',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 10,
+                            backgroundColor: Colors.black87,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        onPressed: () async {
+                          await connection().then((value) => null);
 
-                        if (code == 200) {
-                          AutoRouter.of(context).push(const SqlQueriesRoute());
-                        }
-                      },
-                      child: _isloading
-                          ? CircularProgressIndicator()
-                          : Text(
-                              "Connect",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                    ),
-                  ],
+                          if (code == 200) {
+                            AutoRouter.of(context)
+                                .push(const SqlQueriesRoute());
+                          }
+                        },
+                        child: _isloading
+                            ? CircularProgressIndicator()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 10),
+                                child: Text(
+                                  "Connect",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
